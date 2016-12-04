@@ -1,12 +1,21 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  PropTypes,
+} from 'react';
 import BrowserHistory from 'react-history/BrowserHistory';
 import { Push } from 'react-history';
 import { StaticRouter } from 'react-router';
 
+const {
+  node,
+  shape,
+  string,
+} = this.props;
+
 class RouterWrapper extends Component {
 
   static propTypes = {
-    children: React.Proptypes.node,
+    children: node,
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,6 +37,12 @@ export default class ControlledRouter extends Component {
     super(props);
 
     this.prevPathname = '';
+  }
+
+  static propTypes = {
+    location: shape({
+      pathname: string,
+    }),
   }
 
   shouldComponentUpdate(nextProps) {

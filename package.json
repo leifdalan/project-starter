@@ -50,24 +50,5 @@
       "transform-class-properties",
       "syntax-object-rest-spread"
     ]
-  },
-  "eslintConfig": {
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "env": "browser",
-    "globals": {
-      "__CLIENT__": false
-    },
-    "rules": {
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ]
-    }
   }
 }
