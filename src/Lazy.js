@@ -18,7 +18,7 @@ export default class Lazy extends Component {
           module: module.default,
           hasLoaded: true,
         });
-      }, console.error);
+      }, console.error); // eslint-disable-line
     }
   }
   render() {

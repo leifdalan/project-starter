@@ -1,4 +1,5 @@
 import React from 'react';
+import isEmpty from 'lodash/isEmpty';
 import { renderToString } from 'react-dom/server';
 import { ServerRouter, createServerRenderContext } from 'react-router';
 import { Provider } from 'react-redux';
@@ -10,8 +11,8 @@ import createServerDataContext from './src/createServerDataContext';
 import ServerDataProvider from './src/ServerDataProvider';
 
 const express = require('express');
-const devMiddleware = require('webpack-dev-middleware');
-const hotMiddleware = require('webpack-hot-middleware');
+const devMiddleware = require('webpack-dev-middleware'); // eslint-disable-line
+const hotMiddleware = require('webpack-hot-middleware'); // eslint-disable-line
 const webpack = require('webpack');
 
 const config = require('./webpack.config.dev');
@@ -66,17 +67,15 @@ app.use('/', (req, res) => {
           </Provider>
         </ServerRouter>
       </ServerDataProvider>
-    </Html>
+    </Html>,
   );
 
   // get the result
   const result = context.getResult();
   const { actions } = dataContext.getActions();
-  console.error('actions', actions);
   // the result will tell you if it redirected, if so, we ignore
   // the markup and send a proper redirect.
   if (result.redirect) {
-    console.error('result.code', result.code);
     res.writeHead(result.code, {
       Location: result.redirect.pathname,
     });
@@ -98,11 +97,12 @@ app.use('/', (req, res) => {
               <App />
             </Provider>
           </ServerRouter>
-        </Html>
+        </Html>,
       );
     }
-    if (actions.length) {
-      const promises = actions.map(action => dataContext.executeAction(action));
+    if (!isEmpty(actions)) {
+      const promises = Object.keys(actions)
+        .map(key => dataContext.executeAction(key, actions[key]));
       Promise.all(promises).then(() => {
         markup = renderToString(
           <Html store={store}>
@@ -118,7 +118,7 @@ app.use('/', (req, res) => {
                 </Provider>
               </ServerRouter>
             </ServerDataProvider>
-          </Html>
+          </Html>,
         );
         res.write(markup);
         res.end();

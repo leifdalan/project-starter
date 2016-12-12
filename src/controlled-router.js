@@ -5,12 +5,14 @@ import React, {
 import BrowserHistory from 'react-history/BrowserHistory';
 import { Push } from 'react-history';
 import { StaticRouter } from 'react-router';
+import { window } from './util';
 
 const {
   node,
   shape,
   string,
-} = this.props;
+  func,
+} = PropTypes;
 
 class RouterWrapper extends Component {
 
@@ -32,18 +34,21 @@ class RouterWrapper extends Component {
 }
 
 
-export default class ControlledRouter extends Component {
+export default class ControlledRouter extends Component { // eslint-disable-line
+  static propTypes = {
+    location: shape({
+      pathname: string,
+    }),
+    setLocation: func,
+    children: node,
+  }
+
   constructor(props) {
     super(props);
 
     this.prevPathname = '';
   }
 
-  static propTypes = {
-    location: shape({
-      pathname: string,
-    }),
-  }
 
   shouldComponentUpdate(nextProps) {
     return nextProps.location.pathname !== this.props.location.pathname;
@@ -90,6 +95,6 @@ export default class ControlledRouter extends Component {
           );
         }}
       </BrowserHistory>
-    )
+    );
   }
 }

@@ -1,7 +1,9 @@
 {
   "extends": "airbnb",
   "parser": "babel-eslint",
-  "env": "browser",
+  "plugins": [
+    "import"
+  ],
   "globals": {
     "__CLIENT__": false
   },

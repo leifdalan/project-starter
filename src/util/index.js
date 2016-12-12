@@ -1,4 +1,4 @@
 export default {
-  window, // eslint-disable-line no-undef
-  document, // eslint-disable-line no-undef
+  window, // eslint-disable-line
+  document, // eslint-disable-line
 };

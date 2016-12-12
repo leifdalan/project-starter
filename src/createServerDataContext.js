@@ -1,12 +1,16 @@
 
 const createServerDataContext = () => {
-  const actions = [];
-  const actionResolutions = [];
-  const addAction = action => {
-    actions.push(action);
-  }
+  const actions = {};
+  const actionResolutions = {};
+  const addAction = (key, action) => {
+    actions[key] = action;
+  };
   const getActions = () => ({ actions });
-  const executeAction = action => action().then(resolution => actionResolutions.push(resolution));
+
+  const executeAction = key => actions[key]().then((resolution) => {
+    actionResolutions[key] = resolution;
+  });
+
   return {
     addAction,
     getActions,

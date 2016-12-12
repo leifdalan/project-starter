@@ -19,7 +19,7 @@ const dispatchToProps = dispatch => ({
 });
 
 App.propTypes = {
-  router: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  router: PropTypes.object, // eslint-disable-line
   setLocation: PropTypes.func,
 };
 
